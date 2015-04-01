@@ -1,0 +1,6 @@
+<Alloy>
+	<Window class="container" title="Nearby Locations">
+		<Label id="label" top="0" textAlign="center">Within 10 Miles:</Label>
+	
+	</Window>
+</Alloy>

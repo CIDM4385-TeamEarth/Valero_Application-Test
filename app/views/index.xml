@@ -3,8 +3,8 @@
 		<Menu platform="android">
 			<MenuItem id ="label" title="Home"></MenuItem>
 			<MenuItem id="label" title="Nearby Locations" onClick="showLocations"></MenuItem>
-			<MenuItem id ="label" title="Store Locations"></MenuItem>
-			<MenuItem id="label" title="Trip Planner"></MenuItem>
+			<MenuItem id ="label" title="Store Locations" onClick="storeLocations"></MenuItem>
+			<MenuItem id="label" title="Trip Planner" onClick="tripPlanner"></MenuItem>
 			</Menu>
 	</Window>
 

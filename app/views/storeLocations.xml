@@ -1,0 +1,6 @@
+<Alloy>
+	<Window class="container" title="Store Locations">
+		<Label id="label" top="0" textAlign="center">State:</Label>
+	
+	</Window>
+</Alloy>

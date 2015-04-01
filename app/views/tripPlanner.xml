@@ -1,0 +1,6 @@
+<Alloy>
+	<Window class="container" title="Trip Planner">
+		<Label id="label" top="0" textAlign="center">Search box goes here:</Label>
+	
+	</Window>
+</Alloy>

@@ -1,7 +1,7 @@
 
-function showLocations(e){
-	var showLocations = Alloy.createController("showLocations").getView();
-	showLocations.open();
+function nearbyLocations(e){
+	var nearbyLocations = Alloy.createController("nearbyLocations").getView();
+	nearbyLocations.open();
 }
 
 function storeLocations(e){

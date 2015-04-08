@@ -1,6 +1,20 @@
 <Alloy>
 	<Window class="container" title="Store Locations">
-		<Label id="label" top="0" textAlign="center">State:</Label>
-	
+		<Picker id="stateList">
+			<PickerColumn title="State">
+				<PickerRow title="Texas"></PickerRow>
+				<PickerRow title="New Mexico"></PickerRow>
+				<PickerRow title="Florida"></PickerRow>
+				<PickerRow title="California"></PickerRow>
+			</PickerColumn>
+		</Picker>
+		<Picker id="cityList">
+			<PickerColumn title="City">
+				<PickerRow title="Amarillo"></PickerRow>
+				<PickerRow title="Houston"></PickerRow>
+				<PickerRow title="Dallas"></PickerRow>
+				<PickerRow title="Austin"></PickerRow>
+			</PickerColumn>
+		</Picker>
 	</Window>
 </Alloy>

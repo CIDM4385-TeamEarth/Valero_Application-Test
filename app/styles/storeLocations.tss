@@ -1,7 +1,7 @@
 ".container": {
 	backgroundColor:"white",
+	backgroundImage: "/images/default.9.png",
 	
- 	
  }
  	
 "Label": {
@@ -21,4 +21,18 @@
 		fontFamily: 'Helvetica',
 		fontWeight: 'bold',
 	}
+}
+"#stateList": {
+	backgroundColor:"#006699",
+	top: 0,
+	width: Titanium.UI.FILL,
+	font: {
+		textAlign: "center"
+	}
+
+}
+"#cityList": {
+	backgroundColor:"#006699",
+	top: 50,
+	width: Titanium.UI.FILL
 }

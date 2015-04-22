@@ -13,4 +13,9 @@ function tripPlanner(e){
 	var tripPlanner = Alloy.createController("tripPlanner").getView();
 	tripPlanner.open();
 }
+
+function storeLocationsMap(e){
+	var storeLocationsMap = Alloy.createController("storeLocationsMap").getView();
+	storeLocationsMap.open();
+}
 $.index.open();

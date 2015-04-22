@@ -23,7 +23,7 @@
 	}
 }
 
-".menu": {
-	backgroundColor: "white",
-	color: "black"
-}
+// ".menu": {
+	// backgroundColor: "white",
+	// color: "black"
+// }

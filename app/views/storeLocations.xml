@@ -21,5 +21,6 @@
 				<PickerRow title="Austin"></PickerRow>
 			</PickerColumn>
 		</Picker>
+		<!-- <Button onClick="storeLocationsMap" ></Button> -->
 	</Window>
 </Alloy>

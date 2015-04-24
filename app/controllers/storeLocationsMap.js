@@ -6,7 +6,7 @@
 
 // Add in the module
 var MapModule = require('ti.map');
-var win = Ti.UI.createWindow({backgroundColor: 'white'});
+var win =  Ti.UI.createWindow({backgroundColor: 'white'});
 
 //believe this enables the app to find the location of the device
 Titanium.Geolocation.accuracy = Titanium.Geolocation.ACCURACY_BEST;
@@ -16,7 +16,7 @@ Titanium.Geolocation.accuracy = Titanium.Geolocation.ACCURACY_BEST;
 //Dictates how often an event fires based on the distance the device moves
 //  this value is in meters
 //
-Titanium.Geolocation.distanceFilter = 10;
+Titanium.Geolocation.distanceFilter = 1;
 
 Titanium.Geolocation.getCurrentPosition(function(e)
 {

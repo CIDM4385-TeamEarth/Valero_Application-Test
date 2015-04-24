@@ -7,13 +7,13 @@
 "Label": {
 	width: Ti.UI.SIZE,
 	height: Ti.UI.SIZE,
-	color: "#000"
+	color: "#006699"
 }
 
 "#label": {
 	width: Titanium.UI.FILL,
 	height: '150px',
-	backgroundColor: "#006699",
+	backgroundColor: "#000",
 
 	color: 'white',
 	font: {
@@ -23,7 +23,7 @@
 	}
 }
 
-// ".menu": {
-	// backgroundColor: "white",
-	// color: "black"
-// }
+".menu": {
+	backgroundColor: "#00ff00",
+	color: "#860506"
+}

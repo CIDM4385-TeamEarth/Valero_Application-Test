@@ -14,8 +14,4 @@ function tripPlanner(e){
 	tripPlanner.open();
 }
 
-function storeLocationsMap(e){
-	var storeLocationsMap = Alloy.createController("storeLocationsMap").getView();
-	storeLocationsMap.open();
-}
 $.index.open();

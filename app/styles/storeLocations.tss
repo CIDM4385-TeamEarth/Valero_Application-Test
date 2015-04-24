@@ -39,4 +39,5 @@
 
 ".mapButton": {
 	bottom:20,
+	backgroundColor:"#006699",
 }

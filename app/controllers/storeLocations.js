@@ -69,7 +69,9 @@ var opera = MapModule.createAnnotation({
     latitude: 35.13314,
     longitude: -101.897468,
     title: 'Valero Energy',
-    subtitle: '7201 CANYON DR, Amarillo,TX'
+    subtitle: '7201 CANYON DR, Amarillo,TX',
+    // attempt backgroundColor: "red",
+    //customView: Ti.UI.backgroundColor = "red" //Ti.UI.backgroundColor
 });
 var bridge = MapModule.createAnnotation({
     latitude: 35.221803,

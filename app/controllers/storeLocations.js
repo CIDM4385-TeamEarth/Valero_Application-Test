@@ -18,7 +18,7 @@ function tripPlanner(e){
 
 
 var MapModule = require('ti.map');
-var win =  Ti.UI.createWindow({backgroundColor: 'white'});
+var win =  Ti.UI.createWindow({backgroundColor: 'white', title: "Store Locations"});
 
 //believe this enables the app to find the location of the device
 Titanium.Geolocation.purpose = "Purpose";

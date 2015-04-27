@@ -64,8 +64,8 @@ function openMap(e){
     var speed = e.coords.speed;
     var timestamp = e.coords.timestamp;
     var altitudeAccuracy = e.coords.altitudeAccuracy;
-
-var opera = MapModule.createAnnotation({
+// added by Travis, sets the variable used to display Valero Energy
+var store1 = MapModule.createAnnotation({
     latitude: 35.13314,
     longitude: -101.897468,
     title: 'Valero Energy',
@@ -73,7 +73,79 @@ var opera = MapModule.createAnnotation({
     // attempt backgroundColor: "red",
     //customView: Ti.UI.backgroundColor = "red" //Ti.UI.backgroundColor
 });
-var bridge = MapModule.createAnnotation({
+// added by Travis, sets the variable used to display CEFCO 2091
+var store2 = MapModule.createAnnotation({
+    latitude: 35.221803,
+    longitude: -101.848697,
+    title: 'CEFCO 2091',
+    subtitle: '1600 AMARILLO BLVD E, Amarillo,TX',
+    // attempt backgroundColor: "red",
+    //customView: Ti.UI.backgroundColor = "red" //Ti.UI.backgroundColor
+});
+// added by Travis, sets the variable used to display FAST 19 STOP
+var store3 = MapModule.createAnnotation({
+    latitude: 35.213965,
+    longitude: -101.86166,
+    title: 'FAST 19 STOP',
+    subtitle: '2305 W 3RD AVE, Amarillo,TX',
+    // attempt backgroundColor: "red",
+    //customView: Ti.UI.backgroundColor = "red" //Ti.UI.backgroundColor
+});
+// added by Travis, sets the variable used to display AMARILLO STOP CNT 307
+var store4 = MapModule.createAnnotation({
+    latitude: 35.1474,
+    longitude: -101.742488,
+    title: 'AMARILLO STOP CNT 307',
+    subtitle: '8500 LAKESIDE DR, Amarillo,TX',
+    // attempt backgroundColor: "red",
+    //customView: Ti.UI.backgroundColor = "red" //Ti.UI.backgroundColor
+});
+// added by Travis, sets the variable used to display TOOT 76 N TOTUM
+var store5= MapModule.createAnnotation({
+    latitude: 35.19611,
+    longitude: -101.89305,
+    title: 'TOOT 76 N TOTUM',
+    subtitle: '5041 PLAINS BLVD, Amarillo,TX',
+    // attempt backgroundColor: "red",
+    //customView: Ti.UI.backgroundColor = "red" //Ti.UI.backgroundColor
+});
+// added by Travis, sets the variable used to display TOO 56 N TOTUM
+var store6 = MapModule.createAnnotation({
+    latitude: 35.13218,
+    longitude: -101.9014,
+    title: 'TOOT 56 N TOTUM',
+    subtitle: '7149 S BELL ST, Amarillo,TX',
+    // attempt backgroundColor: "red",
+    //customView: Ti.UI.backgroundColor = "red" //Ti.UI.backgroundColor
+});
+// added by Travis, sets the variable used to display TOOT 63 N TOTUM
+var store7 = MapModule.createAnnotation({
+    latitude: 35.16203,
+    longitude: -101.90281,
+    title: 'TOOT 63 N TOTUM',
+    subtitle: '4420 S BELL ST, Amarillo,TX',
+    // attempt backgroundColor: "red",
+    //customView: Ti.UI.backgroundColor = "red" //Ti.UI.backgroundColor
+});
+// added by Travis, sets the variable used to display TOOT 61 N TOTUM
+var store8 = MapModule.createAnnotation({
+    latitude: 35.1505,
+    longitude: -101.8845,
+    title: 'TOOT 61 N TOTUM',
+    subtitle: '5300 CANYON DR, Amarillo,TX',
+    // attempt backgroundColor: "red",
+    //customView: Ti.UI.backgroundColor = "red" //Ti.UI.backgroundColor
+});
+// added by Travis, sets the variable used to display TOOT 62 N TOTUM
+var store9 = MapModule.createAnnotation({
+    latitude: 35.87837,
+    longitude: -101.21088,
+    title: 'TOOT 62 N TOTUM',
+    subtitle: '3701 SW 6TH AVE, Amarillo,TX',
+    // attempt backgroundColor: "red",
+    //customView: Ti.UI.backgroundColor = "red" //Ti.UI.backgroundColor
+});
+/*var bridge = MapModule.createAnnotation({
     latitude: 35.221803,
     longitude: -101.848697,
     pincolor: MapModule.ANNOTATION_AZURE,
@@ -85,7 +157,7 @@ var bridge = MapModule.createAnnotation({
     //rightButton: 'appicon.jpg',    
     title: '1425 UNIVERSITY NE/',
     subtitle: 'Valero Station, Amarillo,TX'
-});
+});*/
 
 //creates map - Nhat/Ez
 var map1 = MapModule.createView({
@@ -96,7 +168,7 @@ var map1 = MapModule.createView({
     // latitude: 35.13314, longitude: -101.897468
     height: Titanium.UI.FILL,
     width: Titanium.UI.FILL,
-	annotations:[bridge,opera]
+	annotations:[store1,store2,store3,store4,store5,store6,store7,store8,store9]
 });
 
 win.add(map1);

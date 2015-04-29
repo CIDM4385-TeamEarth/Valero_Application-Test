@@ -1,5 +1,5 @@
 <Alloy>
-	<Window class="container" title="Store Locations">
+	<Window  class="container" title="Store Locations"> <!-- id="window" -->
 		<Menu platform="android">
 			<MenuItem id="label" title="Home" onClick="index"></MenuItem>
 			<MenuItem id ="label" title="Nearby Locations" onClick="nearbyLocations"></MenuItem>
@@ -15,7 +15,7 @@
 		</Picker>
 		<Picker id="cityList">
 			<PickerColumn title="City">
-				<PickerRow  title="Amarillo"></PickerRow>
+				<PickerRow  title="Amarillo"></PickerRow>  <!-- onClick="red" -->
 				<PickerRow title="Houston"></PickerRow>
 				<PickerRow title="Dallas"></PickerRow>
 				<PickerRow title="Austin"></PickerRow>
@@ -24,5 +24,8 @@
 		<!-- <Window id="win"></Window> -->
 		<!--button that opens map - Nhat,Ez  -->
 		<Button class="mapButton" onClick="acs">Map</Button>
+		
 	</Window>
+
+
 </Alloy>

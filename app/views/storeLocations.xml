@@ -6,8 +6,8 @@
 			<MenuItem id="label" title="Trip Planner" onClick="tripPlanner"></MenuItem>
 			</Menu>
 		<Picker id="stateList">
-			<PickerColumn title="State">
-				<PickerRow title="Texas"></PickerRow>
+			<PickerColumn title="State" onClick="acs">
+				<PickerRow title="Texas" onClick="acs"></PickerRow>
 				<PickerRow title="New Mexico"></PickerRow>
 				<PickerRow title="Florida"></PickerRow>
 				<PickerRow title="California"></PickerRow>
@@ -15,13 +15,14 @@
 		</Picker>
 		<Picker id="cityList">
 			<PickerColumn title="City">
-				<PickerRow title="Amarillo"></PickerRow>
+				<PickerRow  title="Amarillo"></PickerRow>
 				<PickerRow title="Houston"></PickerRow>
 				<PickerRow title="Dallas"></PickerRow>
 				<PickerRow title="Austin"></PickerRow>
 			</PickerColumn>
 		</Picker>
+		<!-- <Window id="win"></Window> -->
 		<!--button that opens map - Nhat,Ez  -->
-		<Button class="mapButton" onClick="openMap">Map</Button>
+		<Button class="mapButton" onClick="acs">Map</Button>
 	</Window>
 </Alloy>

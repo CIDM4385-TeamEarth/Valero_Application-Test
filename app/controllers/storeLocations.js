@@ -13,7 +13,6 @@ function tripPlanner(e){
 	tripPlanner.open();
 }
 
-<<<<<<< HEAD
 // A function to clear the cityPicker whenever a new state is selected
 function clearCity(){
 	// If the picker has a column...
@@ -126,23 +125,12 @@ gpsProvider.minUpdateTime = 0;
     // backgroundColor : 'white',
 // });
 //  
-=======
-// var win = Ti.UI.createWindow({
-    // backgroundColor : 'white',
-// });
- 
->>>>>>> origin/master
-// win.open();
+
 
 var Cloud = require('ti.cloud');
 
 function acs(){
-<<<<<<< HEAD
 	Cloud.Places.search({per_page: 100, city: _city}, function (e) {
-=======
-	//per_page:100 is a parameter that means how many locations it'll display as that is the limit-Ez/Travis/Nhat
-	Cloud.Places.search({per_page: 100}, function (e) {
->>>>>>> origin/master
     if (e.success) {
     	// Cloud.Places.per_page (100);
         alert('Success:\n' +

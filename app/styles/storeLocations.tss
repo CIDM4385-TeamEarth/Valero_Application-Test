@@ -1,4 +1,4 @@
-".container": {
+"#container": {
 	backgroundColor:"white",
 	backgroundImage: "/images/default.9.png",
 	
@@ -22,7 +22,7 @@
 		fontWeight: 'bold',
 	}
 }
-"#stateList": {
+"#statePicker": {
 	backgroundColor:"#006699",
 	top: 0,
 	width: Titanium.UI.FILL,
@@ -31,7 +31,7 @@
 	}
 
 }
-"#cityList": {
+"#cityPicker": {
 	backgroundColor:"#006699",
 	top: 50,
 	width: Titanium.UI.FILL

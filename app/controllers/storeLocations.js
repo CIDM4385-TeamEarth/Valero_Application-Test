@@ -13,16 +13,124 @@ function tripPlanner(e){
 	tripPlanner.open();
 }
 
-var win = Ti.UI.createWindow({
-    backgroundColor : 'white',
+// A function to clear the cityPicker whenever a new state is selected
+function clearCity(){
+	// If the picker has a column...
+	if(cityPicker.columns[0]){
+		var column = cityPicker.columns[0]; // Set a variable for that column
+		var length = column.rowCount; // Count the picker rows for that column
+		// For every row of that column...
+		for(var i = length-1; i >= 0; i--){
+			var row = column.rows[i];
+			column.removeRow(row); // Remove the current picker row...
+		} // Until all picker rows are removed
+	}
+}
+
+// A function to populate the cityPicker whenever a new state is selected
+function populateCity(cityData){
+	// Create an array to store city picker rows
+	var cityList = [];
+	// For every city in the cityData...
+	for (var city in cityData){
+		cityList[city] = Ti.UI.createPickerRow({title: cityData[city]}); // Create a picker row named after the city...
+	} // Until all city picker rows are created
+	cityPicker.add(cityList); // Add all city rows to the city picker
+}
+
+function populateState(){
+	alert("The function has been activated!");
+}
+
+var states = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", 
+			  "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine",
+			  "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", 
+			  "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", 
+			  "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", 
+			  "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", 
+			  "Wyoming"];
+
+var stateList = [];
+
+for(var state in states) {
+	stateList[state] = Ti.UI.createPickerRow({title: states[state]});
+}
+
+var statePicker = $.statePicker;
+statePicker.add(stateList);
+
+var cityPicker = $.cityPicker;
+
+var txCities = ["Amarillo", "Austin", "Dallas", "Houston"];
+var caCities = ["Los Angeles", "San Diego", "San Francisco", "San Jose"];
+
+statePicker.selectionIndicator = true;
+
+statePicker.addEventListener('change', function(e) {
+	var value = e.row.title;
+	
+	switch(value) {
+		case "Texas":
+			clearCity();
+			populateCity(txCities);
+			break;
+		case "California":
+			clearCity();
+			populateCity(caCities);
+			break;
+		default:
+			alert("There are no data available for that state!");
+			clearPicker();
+			var noCity = Ti.UI.createPickerRow({title: "City"});
+			cityPicker.add(noCity);
+			break;
+	}
+});
+
+var _city = "";
+
+cityPicker.addEventListener('change', function(e) {
+	_city = e.row.title;
+});
+
+var MapModule = require('ti.map');
+var win =  Ti.UI.createWindow({backgroundColor: 'white', title: "Store Locations"});
+
+//believe this enables the app to find the location of the device
+Titanium.Geolocation.purpose = "Purpose";
+Titanium.Geolocation.preferredProvider = Ti.Geolocation.PROVIDER_GPS;
+Titanium.Geolocation.accuracy = Titanium.Geolocation.ACCURACY_BEST;
+ 
+//
+//  Sets the distance filter
+//Dictates how often an event fires based on the distance the device moves
+//  this value is in meters - Ez/Nhat
+//
+// Titanium.Geolocation.distanceFilter = 1;
+Titanium.Geolocation.frequency = 1;
+Titanium.Geolocation.Android.manualMode = true;
+ 
+var gpsProvider = Titanium.Geolocation.Android.createLocationProvider({
+	name : Titanium.Geolocation.PROVIDER_GPS,
+	minUpdateTime : 0, 
+    minUpdateDistance : 0
 });
  
-win.open();
+Titanium.Geolocation.Android.addLocationProvider(gpsProvider); 
+ 
+gpsProvider.minUpdateDistance = 0;
+gpsProvider.minUpdateTime = 0;
+
+// var win = Ti.UI.createWindow({
+    // backgroundColor : 'white',
+// });
+//  
+// win.open();
 
 var Cloud = require('ti.cloud');
 
 function acs(){
-	Cloud.Places.search({}, function (e) {
+	Cloud.Places.search({per_page: 100, city: _city}, function (e) {
     if (e.success) {
         alert('Success:\n' +
             'Count: ' + e.places.length); 
@@ -93,34 +201,6 @@ function acs(){
 });
 };
 
-
-var MapModule = require('ti.map');
-var win =  Ti.UI.createWindow({backgroundColor: 'white', title: "Store Locations"});
-
-//believe this enables the app to find the location of the device
-Titanium.Geolocation.purpose = "Purpose";
-Titanium.Geolocation.preferredProvider = Ti.Geolocation.PROVIDER_GPS;
-Titanium.Geolocation.accuracy = Titanium.Geolocation.ACCURACY_BEST;
- 
-//
-//  Sets the distance filter
-//Dictates how often an event fires based on the distance the device moves
-//  this value is in meters - Ez/Nhat
-//
-// Titanium.Geolocation.distanceFilter = 1;
-    Titanium.Geolocation.frequency = 1;
-    Titanium.Geolocation.Android.manualMode = true;
- 
-    var gpsProvider = Titanium.Geolocation.Android.createLocationProvider({
-        name : Titanium.Geolocation.PROVIDER_GPS,
-        minUpdateTime : 0, 
-        minUpdateDistance : 0
-    });
- 
-    Titanium.Geolocation.Android.addLocationProvider(gpsProvider); 
- 
-    gpsProvider.minUpdateDistance = 0;
-    gpsProvider.minUpdateTime = 0;
 
 // function openMap(e){
 	// Titanium.Geolocation.getCurrentPosition(function(e)

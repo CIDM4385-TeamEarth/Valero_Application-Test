@@ -13,6 +13,7 @@ function tripPlanner(e){
 	tripPlanner.open();
 }
 
+<<<<<<< HEAD
 // A function to clear the cityPicker whenever a new state is selected
 function clearCity(){
 	// If the picker has a column...
@@ -125,13 +126,25 @@ gpsProvider.minUpdateTime = 0;
     // backgroundColor : 'white',
 // });
 //  
+=======
+// var win = Ti.UI.createWindow({
+    // backgroundColor : 'white',
+// });
+ 
+>>>>>>> origin/master
 // win.open();
 
 var Cloud = require('ti.cloud');
 
 function acs(){
+<<<<<<< HEAD
 	Cloud.Places.search({per_page: 100, city: _city}, function (e) {
+=======
+	//per_page:100 is a parameter that means how many locations it'll display as that is the limit-Ez/Travis/Nhat
+	Cloud.Places.search({per_page: 100}, function (e) {
+>>>>>>> origin/master
     if (e.success) {
+    	// Cloud.Places.per_page (100);
         alert('Success:\n' +
             'Count: ' + e.places.length); 
         //alert is used to display success and how many were created, debug to ensure all places have- Ez
@@ -191,6 +204,23 @@ function acs(){
         		annotations: stores // Add annotations from the store array 
         	});
 			// Open window and add the map view
+			
+			// var red = Ti.UI.createView({
+				// backgroundColor: "red"
+			// });
+// 			
+			// function red() {
+				// var storeLocations = alloy.createController().getView();
+				// red.open();
+			// }
+// 			
+			// red.addEventListener("click", function(e) {
+			// var storeLocations = alloy.createController().getView();
+			// red.open();
+			// });
+			
+			// $.window.add(map);
+			// $.window.open();
         	win.add(map);
 			win.open();
 		});

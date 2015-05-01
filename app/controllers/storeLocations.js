@@ -73,16 +73,22 @@ statePicker.addEventListener('change', function(e) {
 		case "Texas":
 			clearCity();
 			populateCity(txCities);
+			_city = txCities[0];
+			
 			break;
 		case "California":
 			clearCity();
 			populateCity(caCities);
+			_city = caCities[0];
+
 			break;
 		default:
 			alert("There are no data available for that state!");
-			clearPicker();
+			clearCity();
 			var noCity = Ti.UI.createPickerRow({title: "City"});
 			cityPicker.add(noCity);
+			_city = "";
+
 			break;
 	}
 });
@@ -130,31 +136,37 @@ gpsProvider.minUpdateTime = 0;
 var Cloud = require('ti.cloud');
 
 function acs(){
-	Cloud.Places.search({per_page: 100, city: _city}, function (e) {
-    if (e.success) {
-    	// Cloud.Places.per_page (100);
-        alert('Success:\n' +
-            'Count: ' + e.places.length); 
-        //alert is used to display success and how many were created, debug to ensure all places have- Ez
-        var stores = [];      
-         // For every loop...
-        for (var i = 0; i < e.places.length; i++) {
-        	//Take the current place and it shows its properties
-            var place = e.places[i];
-            //debug- to confirm connection with acs- Nhat
-            /*alert('id: ' + place.id + '\n' +
-                  'name: ' + place.name + '\n' +
-                  'longitude: ' + place.longitude + '\n' +
-                  'latitude: ' + place.latitude + '\n' +
-                  'updated_at: ' + place.updated_at); */
-            
-            //for the store, create an annotation with the properties of the current place
-            stores[i] = MapModule.createAnnotation({
-            	latitude: place.latitude,
-            	longitude: place.longitude,
-            	title: place.name,
-            	subtitle: place.address + ', ' + place.city + ', ' + place.state
-            });
+	Cloud.Places.search({
+		per_page: 100, 
+		places: [{city: "Dallas"}]
+	}, function (e) {
+    	if (e.success) {
+	    	// Cloud.Places.per_page (100);
+	        alert('Success:\n' +
+	            'Count: ' + e.places.length); 
+	        //alert is used to display success and how many were created, debug to ensure all places have- Ez
+	        var stores = [];      
+	         // For every loop...
+	        for (var i = 0; i < e.places.length; i++) {
+	        	//Take the current place and it shows its properties
+	            var place = e.places[i];
+	            //debug- to confirm connection with acs- Nhat
+	            /*alert('id: ' + place.id + '\n' +
+	                  'name: ' + place.name + '\n' +
+	                  'longitude: ' + place.longitude + '\n' +
+	                  'latitude: ' + place.latitude + '\n' +
+	                  'updated_at: ' + place.updated_at); */
+	            
+	            //for the store, create an annotation with the properties of the current place
+	            if (place.city == _city ){
+	            	
+	            
+	            stores[i] = MapModule.createAnnotation({
+	            	latitude: place.latitude,
+	            	longitude: place.longitude,
+	            	title: place.name,
+	            	subtitle: place.address + ', ' + place.city + ', ' + place.state
+	            }); }
             
             //Debug- proper properties are displayed in the annotation-Nhat/Ez
             /* alert('latitude: ' + place.latitude + '\n' +

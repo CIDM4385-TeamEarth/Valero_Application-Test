@@ -148,8 +148,8 @@ function acs(){
 	}, function (e) {
     	if (e.success) {
 	    	// Cloud.Places.per_page (100);
-	        alert('Success:\n' +
-	            'Count: ' + e.places.length); 
+	        //alert('Success:\n' +
+	          //  'Count: ' + e.places.length); //Travis removed the error box that says how many locations are in ACS** only used in testing
 	        //alert is used to display success and how many were created, debug to ensure all places have- Ez
 	        var stores = [];      
 	         // For every loop...

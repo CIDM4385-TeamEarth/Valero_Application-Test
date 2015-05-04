@@ -76,28 +76,25 @@ statePicker.addEventListener('change', function(e) {
 			clearCity();
 			populateCity(txCities);
 			_city = txCities[0];
-			
 			break;
 		case "California":
 			clearCity();
 			populateCity(caCities);
 			_city = caCities[0];
-
 			break;
 			
-			case "Florida":
+		case "Florida":
 			clearCity();
 			populateCity(flCities);
 			_city = flCities[0];
-
 			break;
+			
 		default:
 			alert("There are no data available for that state!");
 			clearCity();
 			var noCity = Ti.UI.createPickerRow({title: "City"});
 			cityPicker.add(noCity);
 			_city = "";
-
 			break;
 	}
 });

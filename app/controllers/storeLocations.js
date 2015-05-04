@@ -62,7 +62,9 @@ statePicker.add(stateList);
 var cityPicker = $.cityPicker;
 
 var txCities = ["Amarillo", "Austin", "Dallas", "Houston"];
-var caCities = ["Los Angeles", "San Diego", "San Francisco", "San Jose"];
+var caCities = ["Glendale","Los Angeles", "San Diego", "San Francisco", "San Jose"];
+var flCities = ["Miami","Tampa", "Orlando"];
+
 
 statePicker.selectionIndicator = true;
 
@@ -80,6 +82,13 @@ statePicker.addEventListener('change', function(e) {
 			clearCity();
 			populateCity(caCities);
 			_city = caCities[0];
+
+			break;
+			
+			case "Florida":
+			clearCity();
+			populateCity(flCities);
+			_city = flCities[0];
 
 			break;
 		default:

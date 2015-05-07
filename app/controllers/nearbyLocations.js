@@ -13,8 +13,7 @@ function tripPlanner(e){
 	tripPlanner.open();
 }
 
-
-//Screw this spot in particular
+//Kristi, Jake, Keith, Jasen
 function populateMiles(){
 	alert("The function has been activated!");
 }
@@ -35,6 +34,7 @@ var twentyFiveMiles = [];
 var fiftyMiles = [];
 var oneHundredMiles = [];
 
+//Kristi, Jake, Keith, Jasen
 milePicker.selectionIndicator = true;
 
 milePicker.addEventListener('change', function(e) { 

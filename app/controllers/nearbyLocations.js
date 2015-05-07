@@ -3,9 +3,9 @@ function index(e){
 	index.open();
 }
 
-function nearbyLocations(e){
-	var nearbyLocations = Alloy.createController("nearbyLocations").getView();
-	nearbyLocations.open();
+function storeLocations(e){
+	var storeLocations = Alloy.createController("storeLocations").getView();
+	storeLocations.open();
 }
 
 function tripPlanner(e){
@@ -13,101 +13,8 @@ function tripPlanner(e){
 	tripPlanner.open();
 }
 
-// A function to clear the cityPicker whenever a new state is selected
-function clearCity(){
-	// If the picker has a column...
-	if(cityPicker.columns[0]){
-		var column = cityPicker.columns[0]; // Set a variable for that column
-		var length = column.rowCount; // Count the picker rows for that column
-		// For every row of that column...
-		for(var i = length-1; i >= 0; i--){
-			var row = column.rows[i];
-			column.removeRow(row); // Remove the current picker row...
-		} // Until all picker rows are removed
-	}
-}
-
-// A function to populate the cityPicker whenever a new state is selected
-function populateCity(cityData){
-	// Create an array to store city picker rows
-	var cityList = [];
-	// For every city in the cityData...
-	for (var city in cityData){
-		cityList[city] = Ti.UI.createPickerRow({title: cityData[city]}); // Create a picker row named after the city...
-	} // Until all city picker rows are created
-	cityPicker.add(cityList); // Add all city rows to the city picker
-}
-
-function populateState(){
-	alert("The function has been activated!");
-}
-
-var states = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", 
-			  "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine",
-			  "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", 
-			  "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", 
-			  "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota", 
-			  "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", 
-			  "Wyoming"];
-
-var stateList = [];
-
-for(var state in states) {
-	stateList[state] = Ti.UI.createPickerRow({title: states[state]});
-}
-
-var statePicker = $.statePicker;
-statePicker.add(stateList);
-
-var cityPicker = $.cityPicker;
-
-var txCities = ["Amarillo", "Austin", "Dallas", "Houston"];
-var caCities = ["Glendale","Los Angeles", "San Diego", "San Francisco", "San Jose"];
-var flCities = ["Miami","Tampa", "Orlando"];
-
-
-statePicker.selectionIndicator = true;
-
-statePicker.addEventListener('change', function(e) {
-	var value = e.row.title;
-	
-	switch(value) {
-		case "Texas":
-			clearCity();
-			populateCity(txCities);
-			_city = txCities[0];
-			break;
-		case "California":
-			clearCity();
-			populateCity(caCities);
-			_city = caCities[0];
-			break;
-			
-		case "Florida":
-			clearCity();
-			populateCity(flCities);
-			_city = flCities[0];
-			break;
-			
-		default:
-			alert("There are no data available for that state!");
-			clearCity();
-			var noCity = Ti.UI.createPickerRow({title: "City"});
-			cityPicker.add(noCity);
-			_city = "";
-			break;
-	}
-});
-
-var _city = "";
-
-cityPicker.addEventListener('change', function(e) {
-	_city = e.row.title;
-});
-
-
 var MapModule = require('ti.map');
-var win =  Ti.UI.createWindow({backgroundColor: 'white', title: "Store Locations"});
+var win =  Ti.UI.createWindow({backgroundColor: 'white', title: "Nearby Locations"});
 
 //believe this enables the app to find the location of the device
 Titanium.Geolocation.purpose = "Purpose";
@@ -158,7 +65,7 @@ function acs(){
 	                  'updated_at: ' + place.updated_at); */
 	            
 	            //for the store, create an annotation with the properties of the current place
-	            if (place.city == _city ){
+	            //if (place.city == _city ){
 	            	
 	            
 	            stores[i] = MapModule.createAnnotation({
@@ -166,7 +73,7 @@ function acs(){
 	            	longitude: place.longitude,
 	            	title: place.name,
 	            	subtitle: place.address + ', ' + place.city + ', ' + place.state
-	            }); }
+	            }); 
             
             //Debug- proper properties are displayed in the annotation-Nhat/Ez
             /* alert('latitude: ' + place.latitude + '\n' +

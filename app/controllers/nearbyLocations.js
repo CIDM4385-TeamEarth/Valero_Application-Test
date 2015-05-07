@@ -13,6 +13,56 @@ function tripPlanner(e){
 	tripPlanner.open();
 }
 
+
+//Screw this spot in particular
+function populateMiles(){
+	alert("The function has been activated!");
+}
+
+var miles = ["10 miles", "25 miles", "50 miles", "100 miles"];
+
+var mileList = [];
+
+for(var mile in miles) {
+	mileList[mile] = Ti.UI.createPickerRow({title: miles[mile]});
+}
+
+var milePicker = $.milePicker;
+milePicker.add(mileList);
+
+var tenMiles = [];
+var twentyFiveMiles = [];
+var fiftyMiles = [];
+var oneHundredMiles = [];
+
+milePicker.selectionIndicator = true;
+
+milePicker.addEventListener('change', function(e) { 
+	var value = e.row.title;
+	
+	switch(value) {
+		case "10 miles":
+			alert("Show locatons within 10 miles.");
+			break;
+			
+		case "25 miles":
+			alert("Show locatons within 25 miles.");
+			break;
+			
+		case "50 miles":
+			alert("Show locatons within 50 miles.");
+			break;
+			
+		case "100 miles":
+			alert("Show locatons within 100 miles.");
+			break;
+			
+		default:
+			alert("There ain't no gas here, fool.");
+			break;
+	}
+});
+
 var MapModule = require('ti.map');
 var win =  Ti.UI.createWindow({backgroundColor: 'white', title: "Nearby Locations"});
 
@@ -266,4 +316,7 @@ function acs(){
 // win.add(map1);
 // win.open();
 // });
+// }
+
+
 // }

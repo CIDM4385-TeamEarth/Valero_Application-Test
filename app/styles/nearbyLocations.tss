@@ -10,7 +10,7 @@
 	color: "#000"
 }
 
-	".mapButton2": {
+	".mapButton": {
 	bottom:20,
 	backgroundColor:"#006699",
 }
@@ -27,14 +27,15 @@
 		fontWeight: 'bold',
 	}
 }
-"#statePicker": {
+"#milePicker": {
 	backgroundColor:"#006699",
 	top: 0,
 	width: Titanium.UI.FILL,
 	font: {
 		textAlign: "center"
 	}
-	}
+
+}
 "#cityPicker": {
 	backgroundColor:"#006699",
 	top: 50,

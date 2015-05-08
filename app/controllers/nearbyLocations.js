@@ -1,76 +1,98 @@
-function index(e){
+function index(e) {
 	var index = Alloy.createController("index").getView();
 	index.open();
 }
 
-function storeLocations(e){
+function storeLocations(e) {
 	var storeLocations = Alloy.createController("storeLocations").getView();
 	storeLocations.open();
 }
 
-function tripPlanner(e){
+function tripPlanner(e) {
 	var tripPlanner = Alloy.createController("tripPlanner").getView();
 	tripPlanner.open();
 }
 
 //Kristi, Jake, Keith, Jasen
-function populateMiles(){
+function populateMiles() {
 	alert("The function has been activated!");
 }
 
-var miles = ["10 miles", "25 miles", "50 miles", "100 miles"];
+var miles = [ "Stores within 1 mile", "Stores within 5 miles", "Stores within 10 miles", "Stores within 20 miles"];
 
 var mileList = [];
 
-for(var mile in miles) {
-	mileList[mile] = Ti.UI.createPickerRow({title: miles[mile]});
+for (var mile in miles) {
+	mileList[mile] = Ti.UI.createPickerRow({
+		title : miles[mile]
+	});
 }
 
 var milePicker = $.milePicker;
 milePicker.add(mileList);
 
+var oneMile = [];
+var fiveMiles = [];
 var tenMiles = [];
-var twentyFiveMiles = [];
-var fiftyMiles = [];
-var oneHundredMiles = [];
+var twentyMiles = [];
 
 //Kristi, Jake, Keith, Jasen
 milePicker.selectionIndicator = true;
 
-milePicker.addEventListener('change', function(e) { 
+milePicker.addEventListener('change', function(e) {
 	var value = e.row.title;
-	
+
 	switch(value) {
-		case "10 miles":
-			alert("Show locatons within 10 miles.");
-			break;
-			
-		case "25 miles":
-			alert("Show locatons within 25 miles.");
-			break;
-			
-		case "50 miles":
-			alert("Show locatons within 50 miles.");
-			break;
-			
-		case "100 miles":
-			alert("Show locatons within 100 miles.");
-			break;
-			
-		default:
-			alert("There ain't no gas here, fool.");
-			break;
+	case "Stores within 1 mile":
+		acs(2);
+		break;
+
+	case "Stores within 5 miles":
+		acs(6);
+		break;
+
+	case "Stores within 10 miles":
+		acs(11);
+		break;
+
+	case "Stores within 20 miles":
+		acs(21);
+		break;
+
+	default:
+		alert("Looks like you aren't near a Velero Store.");
+		break;
 	}
 });
 
+
+				
+function distance(lat1, lon1, lat2, lon2) {
+	var radlat1 = Math.PI * lat1/180;
+	var radlat2 = Math.PI * lat2/180;
+	var radlon1 = Math.PI * lon1/180;
+	var radlon2 = Math.PI * lon2/180;
+	var theta = lon1-lon2;
+	var radtheta = Math.PI * theta/180;
+	var dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+	dist = Math.acos(dist);
+	dist = dist * 180/Math.PI;
+	dist = dist * 60 * 1.1515;
+
+	return dist;
+}  
+
 var MapModule = require('ti.map');
-var win =  Ti.UI.createWindow({backgroundColor: 'white', title: "Nearby Locations"});
+var win = Ti.UI.createWindow({
+	backgroundColor : 'white',
+	title : "Nearby Locations"
+});
 
 //believe this enables the app to find the location of the device
 Titanium.Geolocation.purpose = "Purpose";
 Titanium.Geolocation.preferredProvider = Ti.Geolocation.PROVIDER_GPS;
 Titanium.Geolocation.accuracy = Titanium.Geolocation.ACCURACY_BEST;
- 
+
 //
 //  Sets the distance filter
 //Dictates how often an event fires based on the distance the device moves
@@ -79,62 +101,74 @@ Titanium.Geolocation.accuracy = Titanium.Geolocation.ACCURACY_BEST;
 // Titanium.Geolocation.distanceFilter = 1;
 Titanium.Geolocation.frequency = 1;
 Titanium.Geolocation.Android.manualMode = true;
- 
+
 var gpsProvider = Titanium.Geolocation.Android.createLocationProvider({
 	name : Titanium.Geolocation.PROVIDER_GPS,
-	minUpdateTime : 0, 
-    minUpdateDistance : 0
+	minUpdateTime : 0,
+	minUpdateDistance : 0
 });
 
-Titanium.Geolocation.Android.addLocationProvider(gpsProvider); 
- 
+Titanium.Geolocation.Android.addLocationProvider(gpsProvider);
+
 gpsProvider.minUpdateDistance = 0;
 gpsProvider.minUpdateTime = 0;
 
 var Cloud = require('ti.cloud');
-function acs(){
+
+function acs(x) {
+Titanium.Geolocation.getCurrentPosition(function(e){
+			if (e.error)
+    		{
+        		alert('Cannot get your current location');
+        		return;
+    		}
+     		// If user position is obtain take its properties and store in seperate variables
+    		var longitude = e.coords.longitude;
+    		var latitude = e.coords.latitude;
+    		var altitude = e.coords.altitude;
+    		var heading = e.coords.heading;
+    		var accuracy = e.coords.accuracy;
+    		var speed = e.coords.speed;
+    		var timestamp = e.coords.timestamp;
+    		var altitudeAccuracy = e.coords.altitudeAccuracy;
+        //	alert("User Lat is" + latitude);
+        	//alert("User Lon is" + longitude);
 	Cloud.Places.search({
-		per_page: 100, 
-		places: [{city: "Dallas"}]
-	}, function (e) {
-    	if (e.success) {
-	    	// Cloud.Places.per_page (100);
-	        //alert('Success:\n' +
-	          //  'Count: ' + e.places.length); //Travis removed the error box that says how many locations are in ACS** only used in testing
-	        //alert is used to display success and how many were created, debug to ensure all places have- Ez
-	        var stores = [];      
-	         // For every loop...
-	        for (var i = 0; i < e.places.length; i++) {
-	        	//Take the current place and it shows its properties
-	            var place = e.places[i];
-	            //debug- to confirm connection with acs- Nhat
-	            /*alert('id: ' + place.id + '\n' +
-	                  'name: ' + place.name + '\n' +
-	                  'longitude: ' + place.longitude + '\n' +
-	                  'latitude: ' + place.latitude + '\n' +
-	                  'updated_at: ' + place.updated_at); */
-	            
-	            //for the store, create an annotation with the properties of the current place
-	            //if (place.city == _city ){
-	            	
-	            
-	            stores[i] = MapModule.createAnnotation({
-	            	latitude: place.latitude,
-	            	longitude: place.longitude,
-	            	title: place.name,
-	            	subtitle: place.address + ', ' + place.city + ', ' + place.state
-	            }); 
-            
-            //Debug- proper properties are displayed in the annotation-Nhat/Ez
-            /* alert('latitude: ' + place.latitude + '\n' +
-            	  'longitude: ' + place.longitude + '\n' +
-            	  'title: ' + place.name + '\n' +
-            	  'subtitle: ' + place.address + ', ' + place.city + ', ' + place.state
-            	 ); */  
-        }
-        
-        //function to get current user position
-		Titanium.Geolocation.getCurrentPosition(function(e){
+		per_page : 100,
+		places : [{
+			city : "Dallas"
+		}]
+	}, function(e) {
+		if (e.success) {
+
+			var stores = [];
+			// For every loop...
+			for (var i = 0; i < e.places.length; i++) {
+				//Take the current place and it shows its properties
+				
+				
+
+				var place = e.places[i];
+				var lt = place.latitude;
+				//alert("Store lat is" + lt);
+				var ln = place.longitude;
+				//alert("Store lon is" + ln);
+				
+			var dis = distance(latitude,longitude,lt,ln);
+			if (dis < x){
+
+				//alert("The distance is: " + dis);
+					stores[i] = MapModule.createAnnotation({
+						latitude : place.latitude,
+						longitude : place.longitude,
+						title : place.name,
+						subtitle : place.address + ', ' + place.city + ', ' + place.state
+					
+					});
+				}
+				}
+			
+Titanium.Geolocation.getCurrentPosition(function(e){
 			if (e.error)
     		{
         		alert('Cannot get your current location');
@@ -151,172 +185,28 @@ function acs(){
     		var altitudeAccuracy = e.coords.altitudeAccuracy;
         	
 			// Create map view
-        	var map = MapModule.createView({
-        		userLocation: true, // Have map contain user location
-        		mapType: MapModule.NORMAL_TYPE,  // Use normal map
-        		animate: true, // Allow animation
-        		region: {latitude: latitude, longitude: longitude, latitudeDelta: 0.1, longitudeDelta: 0.1}, // Start map view on user location
-        		height: Titanium.UI.FILL, // Map view to full height of the current device screen
-        		width: Titanium.UI.FILL, // Map view to full width of the current device screen
-        		annotations: stores // Add annotations from the store array 
-        	});
-			// Open window and add the map view
-			
-			// var red = Ti.UI.createView({
-				// backgroundColor: "red"
-			// });
-// 			
-			// function red() {
-				// var storeLocations = alloy.createController().getView();
-				// red.open();
-			// }
-// 			
-			// red.addEventListener("click", function(e) {
-			// var storeLocations = alloy.createController().getView();
-			// red.open();
-			// });
-			
-			// $.window.add(map);
-			// $.window.open();
-        	win.add(map);
+			var map = MapModule.createView({
+				userLocation : true, // Have map contain user location
+				mapType : MapModule.NORMAL_TYPE, // Use normal map
+				animate : true, // Allow animation
+				region : {
+					latitude : latitude,
+					longitude : longitude,
+					latitudeDelta : 0.1,
+					longitudeDelta : 0.1
+				}, // Start map view on user location
+				height : Titanium.UI.FILL, // Map view to full height of the current device screen
+				width : Titanium.UI.FILL, // Map view to full width of the current device screen
+				annotations : stores // Add annotations from the store array
+			});
+
+			win.add(map);
 			win.open();
-		});
-    } else { // Else if place cannot be obtained alert error
-        alert('Error:\n' +
-            ((e.error && e.message) || JSON.stringify(e)));
-    }
 });
+		} else {// Else if place cannot be obtained alert error
+			alert('Error:\n' + ((e.error && e.message) || JSON.stringify(e)));
+		}
+	});
+	});
 };
 
-
-// function openMap(e){
-	// Titanium.Geolocation.getCurrentPosition(function(e)
-// {
-    // if (e.error)
-    // {
-        // alert('Cannot get your current location');
-        // return;
-    // }
-//  
-    // var longitude = e.coords.longitude;
-    // var latitude = e.coords.latitude;
-    // var altitude = e.coords.altitude;
-    // var heading = e.coords.heading;
-    // var accuracy = e.coords.accuracy;
-    // var speed = e.coords.speed;
-    // var timestamp = e.coords.timestamp;
-    // var altitudeAccuracy = e.coords.altitudeAccuracy;
-// // added by Travis, sets the variable used to display Valero Energy
-// var store1 = MapModule.createAnnotation({
-    // latitude: 35.13314,
-    // longitude: -101.897468,
-    // title: 'Valero Energy',
-    // subtitle: '7201 CANYON DR, Amarillo,TX',
-    // // attempt backgroundColor: "red",
-    // //customView: Ti.UI.backgroundColor = "red" //Ti.UI.backgroundColor
-// });
-// // added by Travis, sets the variable used to display CEFCO 2091
-// var store2 = MapModule.createAnnotation({
-    // latitude: 35.221803,
-    // longitude: -101.848697,
-    // title: 'CEFCO 2091',
-    // subtitle: '1600 AMARILLO BLVD E, Amarillo,TX',
-    // // attempt backgroundColor: "red",
-    // //customView: Ti.UI.backgroundColor = "red" //Ti.UI.backgroundColor
-// });
-// // added by Travis, sets the variable used to display FAST 19 STOP
-// var store3 = MapModule.createAnnotation({
-    // latitude: 35.213965,
-    // longitude: -101.86166,
-    // title: 'FAST 19 STOP',
-    // subtitle: '2305 W 3RD AVE, Amarillo,TX',
-    // // attempt backgroundColor: "red",
-    // //customView: Ti.UI.backgroundColor = "red" //Ti.UI.backgroundColor
-// });
-// // added by Travis, sets the variable used to display AMARILLO STOP CNT 307
-// var store4 = MapModule.createAnnotation({
-    // latitude: 35.1474,
-    // longitude: -101.742488,
-    // title: 'AMARILLO STOP CNT 307',
-    // subtitle: '8500 LAKESIDE DR, Amarillo,TX',
-    // // attempt backgroundColor: "red",
-    // //customView: Ti.UI.backgroundColor = "red" //Ti.UI.backgroundColor
-// });
-// // added by Travis, sets the variable used to display TOOT 76 N TOTUM
-// var store5= MapModule.createAnnotation({
-    // latitude: 35.19611,
-    // longitude: -101.89305,
-    // title: 'TOOT 76 N TOTUM',
-    // subtitle: '5041 PLAINS BLVD, Amarillo,TX',
-    // // attempt backgroundColor: "red",
-    // //customView: Ti.UI.backgroundColor = "red" //Ti.UI.backgroundColor
-// });
-// // added by Travis, sets the variable used to display TOO 56 N TOTUM
-// var store6 = MapModule.createAnnotation({
-    // latitude: 35.13218,
-    // longitude: -101.9014,
-    // title: 'TOOT 56 N TOTUM',
-    // subtitle: '7149 S BELL ST, Amarillo,TX',
-    // // attempt backgroundColor: "red",
-    // //customView: Ti.UI.backgroundColor = "red" //Ti.UI.backgroundColor
-// });
-// // added by Travis, sets the variable used to display TOOT 63 N TOTUM
-// var store7 = MapModule.createAnnotation({
-    // latitude: 35.16203,
-    // longitude: -101.90281,
-    // title: 'TOOT 63 N TOTUM',
-    // subtitle: '4420 S BELL ST, Amarillo,TX',
-    // // attempt backgroundColor: "red",
-    // //customView: Ti.UI.backgroundColor = "red" //Ti.UI.backgroundColor
-// });
-// // added by Travis, sets the variable used to display TOOT 61 N TOTUM
-// var store8 = MapModule.createAnnotation({
-    // latitude: 35.1505,
-    // longitude: -101.8845,
-    // title: 'TOOT 61 N TOTUM',
-    // subtitle: '5300 CANYON DR, Amarillo,TX',
-    // // attempt backgroundColor: "red",
-    // //customView: Ti.UI.backgroundColor = "red" //Ti.UI.backgroundColor
-// });
-// // added by Travis, sets the variable used to display TOOT 62 N TOTUM
-// var store9 = MapModule.createAnnotation({
-    // latitude: 35.87837,
-    // longitude: -101.21088,
-    // title: 'TOOT 62 N TOTUM',
-    // subtitle: '3701 SW 6TH AVE, Amarillo,TX',
-    // // attempt backgroundColor: "red",
-    // //customView: Ti.UI.backgroundColor = "red" //Ti.UI.backgroundColor
-// });
-// /*var bridge = MapModule.createAnnotation({
-    // latitude: 35.221803,
-    // longitude: -101.848697,
-    // pincolor: MapModule.ANNOTATION_AZURE,
- // // Even though we are creating a button, it does not respond to Button events or animates.
- // // Use the Map View's click event and monitor the clicksource property for 'leftPane'.
-    // leftView: Ti.UI.createButton({title: 'Detail'}),
- // // For eventing, use the Map View's click event
- // // and monitor the clicksource property for 'rightPane'.
-    // //rightButton: 'appicon.jpg',    
-    // title: '1425 UNIVERSITY NE/',
-    // subtitle: 'Valero Station, Amarillo,TX'
-// });*/
-// 
-// //creates map - Nhat/Ez
-// var map1 = MapModule.createView({
-    // userLocation: true,
-    // mapType: MapModule.NORMAL_TYPE,
-    // animate: true,
-    // region: {latitude: latitude, longitude: longitude, latitudeDelta: 0.1, longitudeDelta: 0.1 },
-    // // latitude: 35.13314, longitude: -101.897468
-    // height: Titanium.UI.FILL,
-    // width: Titanium.UI.FILL,
-	// annotations:[store1,store2,store3,store4,store5,store6,store7,store8,store9]
-// });
-// 
-// win.add(map1);
-// win.open();
-// });
-// }
-
-
-// }

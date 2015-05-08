@@ -7,11 +7,10 @@
 			<MenuItem id="label" title="Trip Planner" onClick="tripPlanner"></MenuItem>
 		</Menu>
 		
-		<Picker id="milePicker" >
+		<Picker id="milePicker" title="Filter by Miles:">
 			<PickerColumn title="Mile" >
 			</PickerColumn>
 		</Picker>
 
-		<Button class="mapButton" onClick="acs">Map</Button>
 	</Window>
 </Alloy>

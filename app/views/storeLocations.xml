@@ -1,4 +1,5 @@
 <Alloy>
+	<!-- Nhat, Ez, Travis- We worked on this view -->
 	<Window id="container" title="Store Locations">
 		<Menu platform="android">
 			<MenuItem id="label" title="Home" onClick="index"></MenuItem>

@@ -5,10 +5,10 @@
     <id>com.ci.valero</id>
     <name>Valero_Application</name>
     <version>1.0</version>
-    <publisher>Ezau Sanchez</publisher>
+    <publisher>Team Earth</publisher>
     <url>http://example.com</url>
     <description>undefined</description>
-    <copyright>2015 by Ezau Sanchez</copyright>
+    <copyright>2015 by Team Earth</copyright>
     <icon>appicon.png</icon>
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
@@ -60,6 +60,7 @@
                 android:name="com.ci.valero.permission.MAPS_RECEIVE" android:protectionLevel="signature"/>
         <application android:theme="@style/Theme.Valero_dark">
         	<!-- Customized Action bar menu via this link- Ez/Nhat
+        	
         		http://jgilfelt.github.io/android-actionbarstylegenerator/#name=Valero_Dark&compat=appcompat&theme=dark&actionbarstyle=solid&texture=1&hairline=1&neutralPressed=
         	0&backColor=727272%2C100&secondaryColor=069%2C100&tabColor=fc3%2C100&tertiaryColor=069%2C100&accentColor=00476b%2C100&cabBackColor=069%2C100&cabHighlightColor=00476b%2C100 
         	-->

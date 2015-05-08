@@ -12,7 +12,7 @@ function tripPlanner(e){
 	var tripPlanner = Alloy.createController("tripPlanner").getView();
 	tripPlanner.open();
 }
-
+//Nhat, Ez, Travis- We worked on this whole controller
 // A function to clear the cityPicker whenever a new state is selected
 function clearCity(){
 	// If the picker has a column...

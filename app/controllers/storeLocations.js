@@ -38,10 +38,6 @@ function populateCity(cityData){
 	cityPicker.add(cityList); // Add all city rows to the city picker
 }
 
-function populateState(){
-	alert("The function has been activated!");
-}
-
 var states = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "Florida", 
 			  "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine",
 			  "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", 
@@ -65,8 +61,55 @@ var txCities = ["Amarillo", "Austin", "Dallas", "Houston"];
 var caCities = ["Glendale","Los Angeles", "San Diego", "San Francisco", "San Jose"];
 var flCities = ["Miami","Tampa", "Orlando"];
 
+var latitude = "";
+var longitude = "";
+
+function startingRegion(city) {
+	switch(city) {
+		case "Amarillo":
+		latitude = 35.1992;
+		longitude = -101.8453;
+			break;
+				
+		case "Dallas":
+		latitude = 32.7767;
+		longitude = -96.7970;
+			break;
+				
+		case "Glendale":
+		latitude = 34.1708;
+		longitude = -118.2500;
+			break;
+				
+		case "Miami":
+		latitude = 25.7753;
+		longitude = -80.2089;
+			break;
+				
+		default:
+		Titanium.Geolocation.getCurrentPosition(function(e){
+			if (e.error)
+    		{
+        		alert('Cannot get your current location');
+        		return;
+    		}
+     		// If user position is obtain take its properties and store in seperate variables
+    	longitude = e.coords.longitude;
+    	latitude = e.coords.latitude;
+  		});
+    		// var altitude = e.coords.altitude;
+    		// var heading = e.coords.heading;
+    		// var accuracy = e.coords.accuracy;
+    		// var speed = e.coords.speed;
+    		// var timestamp = e.coords.timestamp;
+    		// var altitudeAccuracy = e.coords.altitudeAccuracy;
+			break;
+		}
+}
 
 statePicker.selectionIndicator = true;
+
+var _city = "";
 
 statePicker.addEventListener('change', function(e) {
 	var value = e.row.title;
@@ -76,7 +119,9 @@ statePicker.addEventListener('change', function(e) {
 			clearCity();
 			populateCity(txCities);
 			_city = txCities[0];
+			
 			break;
+			
 		case "California":
 			clearCity();
 			populateCity(caCities);
@@ -98,8 +143,6 @@ statePicker.addEventListener('change', function(e) {
 			break;
 	}
 });
-
-var _city = "";
 
 cityPicker.addEventListener('change', function(e) {
 	_city = e.row.title;
@@ -133,18 +176,11 @@ Titanium.Geolocation.Android.addLocationProvider(gpsProvider);
 gpsProvider.minUpdateDistance = 0;
 gpsProvider.minUpdateTime = 0;
 
-// var win = Ti.UI.createWindow({
-    // backgroundColor : 'white',
-// });
-//  
-
-
 var Cloud = require('ti.cloud');
 
 function acs(){
 	Cloud.Places.search({
-		per_page: 100, 
-		places: [{city: "Dallas"}]
+		per_page: 100
 	}, function (e) {
     	if (e.success) {
 	    	// Cloud.Places.per_page (100);
@@ -164,15 +200,14 @@ function acs(){
 	                  'updated_at: ' + place.updated_at); */
 	            
 	            //for the store, create an annotation with the properties of the current place
-	            if (place.city == _city ){
-	            	
-	            
-	            stores[i] = MapModule.createAnnotation({
-	            	latitude: place.latitude,
-	            	longitude: place.longitude,
-	            	title: place.name,
-	            	subtitle: place.address + ', ' + place.city + ', ' + place.state
-	            }); }
+	            if (place.city == _city ) {
+	            	stores[i] = MapModule.createAnnotation({
+	            		latitude: place.latitude,
+	            		longitude: place.longitude,
+	            		title: place.name,
+	            		subtitle: place.address + ', ' + place.city + ', ' + place.state
+	            	});
+	            }
             
             //Debug- proper properties are displayed in the annotation-Nhat/Ez
             /* alert('latitude: ' + place.latitude + '\n' +
@@ -180,24 +215,26 @@ function acs(){
             	  'title: ' + place.name + '\n' +
             	  'subtitle: ' + place.address + ', ' + place.city + ', ' + place.state
             	 ); */  
-        }
+        	}
         
         //function to get current user position
-		Titanium.Geolocation.getCurrentPosition(function(e){
-			if (e.error)
-    		{
-        		alert('Cannot get your current location');
-        		return;
-    		}
-     		// If user position is obtain take its properties and store in seperate variables
-    		var longitude = e.coords.longitude;
-    		var latitude = e.coords.latitude;
-    		var altitude = e.coords.altitude;
-    		var heading = e.coords.heading;
-    		var accuracy = e.coords.accuracy;
-    		var speed = e.coords.speed;
-    		var timestamp = e.coords.timestamp;
-    		var altitudeAccuracy = e.coords.altitudeAccuracy;
+		// Titanium.Geolocation.getCurrentPosition(function(e){
+			// if (e.error)
+    		// {
+        		// alert('Cannot get your current location');
+        		// return;
+    		// }
+     		// // If user position is obtain take its properties and store in seperate variables
+    		// var longitude = e.coords.longitude;
+    		// var latitude = e.coords.latitude;
+    		// var altitude = e.coords.altitude;
+    		// var heading = e.coords.heading;
+    		// var accuracy = e.coords.accuracy;
+    		// var speed = e.coords.speed;
+    		// var timestamp = e.coords.timestamp;
+    		// var altitudeAccuracy = e.coords.altitudeAccuracy;
+        	
+        	startingRegion(_city);
         	
 			// Create map view
         	var map = MapModule.createView({
@@ -229,7 +266,7 @@ function acs(){
 			// $.window.open();
         	win.add(map);
 			win.open();
-		});
+		// });
     } else { // Else if place cannot be obtained alert error
         alert('Error:\n' +
             ((e.error && e.message) || JSON.stringify(e)));
